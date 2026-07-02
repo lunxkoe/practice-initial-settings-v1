@@ -63,7 +63,7 @@ class UserRepositoryTest {
         assertThat(foundUser.getId()).isNotNull();
         assertThat(foundUser.getCreatedAt()).isNotNull();
         assertThat(foundUser.getProfile()).isNotNull();
-        assertThat(foundUser.getId()).isEqualTo(savedUser.getProfile().getId());
+        assertThat(foundUser.getProfile().getId()).isEqualTo(savedUser.getProfile().getId());
         assertThat(foundUser.getProfile().getGender()).isEqualTo(Gender.MALE);
     }
 }
