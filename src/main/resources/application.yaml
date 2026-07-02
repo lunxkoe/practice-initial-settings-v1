@@ -16,6 +16,11 @@ spring:
     username: closet_user
     password: closet_password
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 30       # 기본값(10)에서 상향. 가상 스레드 동시 I/O 처리 대비
+      minimum-idle: 10
+      connection-timeout: 5000    # 커넥션 획득 대기 시간 (5초)
+      max-lifetime: 1800000       # 30분. DB의 커넥션 타임아웃보다 짧게 설정
 
   jpa:
     hibernate:
@@ -47,6 +52,11 @@ spring:
     username: ${PROD_DB_USERNAME}
     password: ${PROD_DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 30       # 기본값(10)에서 상향. 가상 스레드 동시 I/O 처리 대비
+      minimum-idle: 10
+      connection-timeout: 5000    # 커넥션 획득 대기 시간 (5초)
+      max-lifetime: 1800000       # 30분. DB의 커넥션 타임아웃보다 짧게 설정
 
   jpa:
     hibernate:
@@ -57,7 +67,7 @@ spring:
 
 logging:
   level:
-    lunxkoe.practice: info
+    lunxkoe.practiceinitialsettingsv1: info
 
 decorator:
   datasource:
