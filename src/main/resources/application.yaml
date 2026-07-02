@@ -57,7 +57,7 @@ spring:
 
 logging:
   level:
-    lunxkoe.practice: info
+    lunxkoe.practiceinitialsettingsv1: info
 
 decorator:
   datasource:
