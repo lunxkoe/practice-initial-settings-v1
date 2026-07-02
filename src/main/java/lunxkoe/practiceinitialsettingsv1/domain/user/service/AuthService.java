@@ -12,9 +12,11 @@ import lunxkoe.practiceinitialsettingsv1.domain.user.repository.UserRepository;
 import lunxkoe.practiceinitialsettingsv1.global.exception.BusinessException;
 import lunxkoe.practiceinitialsettingsv1.global.exception.ErrorCode;
 import lunxkoe.practiceinitialsettingsv1.global.security.jwt.JwtProvider;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +52,12 @@ public class AuthService {
                 newProfile
         );
 
-        User savedUser = userRepository.save(newUser);
+        User savedUser;
+        try {
+            savedUser = userRepository.saveAndFlush(newUser);
+        } catch (DataIntegrityViolationException e) {
+            throw new BusinessException(ErrorCode.EMAIL_ALREADY_EXISTS);
+        }
 
         return UserDto.from(savedUser);
     }
@@ -64,7 +71,7 @@ public class AuthService {
         Authentication authentication;
         try {
             authentication = authenticationManager.authenticate(authToken);
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
             throw new BusinessException(ErrorCode.INVALID_USERNAME_OR_PASSWORD);
         }
 
