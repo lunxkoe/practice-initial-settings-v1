@@ -23,10 +23,8 @@ public class Profile {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Gender gender;
 
-    @Column(nullable = false)
     private LocalDate birthDate;
 
     private Integer tempSensitivity;
@@ -57,6 +55,10 @@ public class Profile {
         this.gridX = gridX;
         this.gridY = gridY;
         this.locationNames = locationNames;
+    }
+
+    public static Profile createProfileInit() {
+        return new Profile();
     }
 
     public static Profile createProfile(Gender gender, LocalDate birthDate, Integer tempSensitivity, String profileImageUrl, Double lat, Double lon, Integer gridX, Integer gridY, String locationNames) {
